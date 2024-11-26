@@ -5,9 +5,19 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(300, 200), "SFML works!");
+    sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML works!");
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
+
+    sf::RectangleShape rectangle(sf::Vector2f(100.f, 50.f));
+    rectangle.setFillColor(sf::Color::Red);
+    rectangle.setPosition(250, 500);
+    
+    sf::Texture texture;
+    texture.loadFromFile("./Ribbit.png");
+    sf::Sprite sprite;
+    sprite.setTexture(texture);
+    sprite.setScale(sf::Vector2f(2, 2));
 
     while (window.isOpen())
     {
@@ -20,6 +30,8 @@ int main()
 
         window.clear();
         window.draw(shape);
+        window.draw(rectangle);
+        window.draw(sprite);
         window.display();
     }
 
