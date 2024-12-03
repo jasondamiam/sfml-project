@@ -2,10 +2,16 @@
 #include <iostream>
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(1000, 600) , "SFML works!");
+
+    enum mapstates {
+        start,
+        secondmap
+    };
 
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
@@ -20,6 +26,11 @@ int main()
     sprite.setTexture(texture);
     sprite.setScale(2.f, 2.f);
 
+    sf::Music music;
+    music.openFromFile("./newbarktown.ogg");
+    music.setVolume(100.f);
+    music.play();
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -28,6 +39,8 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+
+        mapstates Levels = start;
 
         float moveSpeed = 0.5f;
         sf::Vector2f movement(0.f, 0.f);
@@ -48,7 +61,9 @@ int main()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
             movement.y += moveSpeed;
         }
-
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
+            Levels == secondmap;
+        }
 
         sf::Vector2u windowSize = window.getSize();
         sf::FloatRect spriteBounds = sprite.getGlobalBounds();
@@ -70,10 +85,17 @@ int main()
 
         sprite.setPosition(newPosition);
 
-        window.clear();
-        window.draw(shape);
-        window.draw(rectangle);
-        window.draw(sprite);
+        if (Levels == start) {
+            window.clear();
+            window.draw(shape);
+            window.draw(rectangle);
+            window.draw(sprite);
+        }
+        else if (Levels == secondmap) {
+            window.clear();
+            window.draw(sprite);
+        }
+
         window.display();
     }
 
