@@ -3,17 +3,16 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+enum mapstates {
+    start,
+    secondmap
+};
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(1000, 600) , "SFML works!");
 
-    enum mapstates {
-        start,
-        secondmap
-    };
-
-    sf::CircleShape shape(100.f);
+    sf::CircleShape shape(100.f);                                       // creating the stuff that can be displayed once opened
     shape.setFillColor(sf::Color::Green);
 
     sf::RectangleShape rectangle(sf::Vector2f(100.f, 50.f));
@@ -31,7 +30,9 @@ int main()
     music.setVolume(100.f);
     music.play();
 
-    while (window.isOpen())
+    mapstates Levels = mapstates::start;
+
+    while (window.isOpen())                                 // what you see when you open
     {
         sf::Event event;
         while (window.pollEvent(event))
@@ -40,12 +41,11 @@ int main()
                 window.close();
         }
 
-        mapstates Levels = start;
 
         float moveSpeed = 0.5f;
         sf::Vector2f movement(0.f, 0.f);
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {          // movement
             movement.x -= moveSpeed;
             sprite.setScale(-2.f, 2.f);
             sprite.setOrigin(sprite.getLocalBounds().width, 0);
@@ -61,16 +61,13 @@ int main()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
             movement.y += moveSpeed;
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
-            Levels == secondmap;
-        }
 
         sf::Vector2u windowSize = window.getSize();
         sf::FloatRect spriteBounds = sprite.getGlobalBounds();
 
         sf::Vector2f newPosition = sprite.getPosition() + movement;
 
-        if (newPosition.x < 0) {
+        if (newPosition.x < 0) {                                            // make sure that character not goes out of bounds
             newPosition.x = 0;
         }
         if (newPosition.y < 0) {
@@ -84,19 +81,28 @@ int main()
         }
 
         sprite.setPosition(newPosition);
-
-        if (Levels == start) {
-            window.clear();
-            window.draw(shape);
-            window.draw(rectangle);
-            window.draw(sprite);
+                    
+        if (event.key.code == sf::Keyboard::E) {                            // triggers to switch maps
+            Levels = mapstates::start;
         }
-        else if (Levels == secondmap) {
-            window.clear();
-            window.draw(sprite);
+        else if (event.key.code == sf::Keyboard::B) {
+            Levels = mapstates::secondmap;
         }
 
-        window.display();
+        window.clear();
+
+        switch (Levels) {                                                   // switch case to make switching maps work
+            case mapstates::start:                                          
+                window.draw(shape);
+                window.draw(sprite);
+                break;
+            case mapstates::secondmap:
+                window.draw(sprite);
+                window.draw(rectangle);
+                break;
+            }
+
+        window.display();                                                    // displays whats on
     }
 
     return 0;
