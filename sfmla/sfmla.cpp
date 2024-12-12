@@ -20,9 +20,13 @@ int main()
     sf::Sprite startsprite(TextureManager::getTexture("./MapBackgrounds/start-background.png"));
     sf::Sprite swamp(TextureManager::getTexture("./MapBackgrounds/swamp.png"));
     sf::Sprite sprite(TextureManager::getTexture("./CharacterSprites/Ribbit.png"));
+    sf::Sprite frend(TextureManager::getTexture("./CharacterSprites/Chillkatoe.png"));
 
     sprite.setScale(2.f, 2.f);
     sprite.setPosition(300.f, 300.f);
+
+    frend.setScale(3.f, 3.f);
+    frend.setPosition(100.f, 100.f);
 
     sf::Music startmapmusic;
     startmapmusic.openFromFile("./newbarktown.ogg");
@@ -126,6 +130,7 @@ int main()
         case MapState::start:
             window.draw(startsprite);
             window.draw(sprite);
+            window.draw(frend);
             break;
         case MapState::secondmap:
             window.draw(swamp);
