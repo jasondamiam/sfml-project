@@ -1,33 +1,25 @@
-
 #include <iostream>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "Barrier.h"
-enum mapstates {
+#include "TextureManager.h"
+
+enum MapState {
     start,
     secondmap
 };
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1000, 600) , "SFML works!");
-                                       
+    sf::RenderWindow window(sf::VideoMode(1000, 600), "SFML works!");
+
     // creating the stuff that can be displayed once opened
 
-    sf::RectangleShape rectangle(sf::Vector2f(100.f, 50.f));
-    rectangle.setFillColor(sf::Color::Red);
-    rectangle.setPosition(250, 500);
-    
-    sf::Texture startbackground;
-    startbackground.loadFromFile("./start-background.png");
-    sf::Sprite startsprite;
-    startsprite.setTexture(startbackground);
+    sf::Sprite startsprite(TextureManager::getTexture("./MapBackgrounds/start-background.png"));
+    sf::Sprite swamp(TextureManager::getTexture("./MapBackgrounds/swamp.png"));
+    sf::Sprite sprite(TextureManager::getTexture("./CharacterSprites/Ribbit.png"));
 
-    sf::Texture texture;
-    texture.loadFromFile("./Ribbit.png");
-    sf::Sprite sprite;
-    sprite.setTexture(texture);
     sprite.setScale(2.f, 2.f);
     sprite.setPosition(300.f, 300.f);
 
@@ -42,14 +34,14 @@ int main()
         Barrier(sf::Vector2f(0.f, 0.f), sf::Vector2f(440.f, 50.f)), // top left barrier
         Barrier(sf::Vector2f(0.f, 545.f), sf::Vector2f(1000.f, 55.f)), // bottom barrier
         Barrier(sf::Vector2f(950.f, 0.f), sf::Vector2f(10.f, 600.f)), // right barrier
-        Barrier(sf::Vector2f(1000.f, 0.f), sf::Vector2f(-470.f, 50.f))
+        Barrier(sf::Vector2f(1000.f, 0.f), sf::Vector2f(-470.f, 50.f)) // top right barrier
     };
 
     std::vector<Barrier> secondMapBarriers = {
 
     };
 
-    mapstates Levels = mapstates::start;
+    MapState Levels = MapState::start;
 
     while (window.isOpen())                                 // what you see when you open
     {
@@ -86,49 +78,55 @@ int main()
         newBounds.left += movement.x;
         newBounds.top += movement.y;
 
-        const std::vector<Barrier>* barriers = (Levels == mapstates::start) ? &startBarriers : &secondMapBarriers;
+        const std::vector<Barrier>* barriers = (Levels == MapState::start) ? &startBarriers : &secondMapBarriers;
 
         for (const Barrier& barrier : *barriers) {
             if (barrier.checkCollision(newBounds)) {
                 sf::FloatRect barrierBounds = barrier.getBounds();
 
-                if (newBounds.left < barrierBounds.left && movement.x > 0) { 
+                if (newBounds.left < barrierBounds.left && movement.x > 0) {
                     movement.x = 0;
                 }
-                if (newBounds.left + newBounds.width > barrierBounds.left + barrierBounds.width && movement.x < 0) { 
+                if (newBounds.left + newBounds.width > barrierBounds.left + barrierBounds.width && movement.x < 0) {
                     movement.x = 0;
                 }
-                if (newBounds.top < barrierBounds.top && movement.y > 0) { 
+                if (newBounds.top < barrierBounds.top && movement.y > 0) {
                     movement.y = 0;
                 }
-                if (newBounds.top + newBounds.height > barrierBounds.top + barrierBounds.height && movement.y < 0) { 
+                if (newBounds.top + newBounds.height > barrierBounds.top + barrierBounds.height && movement.y < 0) {
                     movement.y = 0;
                 }
             }
         }
 
-        
-        sprite.move(movement);
+        if (Levels == MapState::start) {
+            if (sprite.getPosition().y < 0) {
+                sprite.setPosition(sprite.getPosition().x, window.getSize().y - 1);
+                Levels = MapState::secondmap;
+            }
+        }
+        else if (Levels == MapState::secondmap) {
+            if (sprite.getPosition().y > window.getSize().y) {
+                sprite.setPosition(sprite.getPosition().x, 1);
+                Levels = MapState::start;
+            }
+        }
 
-        if (event.key.code == sf::Keyboard::E) {                            // triggers to switch maps
-            Levels = mapstates::start;
-        }
-        else if (event.key.code == sf::Keyboard::B) {
-            Levels = mapstates::secondmap;
-        }
+
+        sprite.move(movement);
 
         window.clear();
 
         switch (Levels) {                                                   // switch case to make switching maps work
-            case mapstates::start:                                          
-                window.draw(startsprite);
-                window.draw(sprite);
-                break;
-            case mapstates::secondmap:
-                window.draw(sprite);
-                window.draw(rectangle);
-                break;
-            }
+        case MapState::start:
+            window.draw(startsprite);
+            window.draw(sprite);
+            break;
+        case MapState::secondmap:
+            window.draw(swamp);
+            window.draw(sprite);
+            break;
+        }
 
         window.display();                                                    // displays whats on
     }
