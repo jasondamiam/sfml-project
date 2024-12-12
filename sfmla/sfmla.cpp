@@ -7,7 +7,8 @@
 
 enum MapState {
     start,
-    secondmap
+    secondmap,
+    thirdmap
 };
 
 int main()
@@ -110,6 +111,10 @@ int main()
                 sprite.setPosition(sprite.getPosition().x, 1);
                 Levels = MapState::start;
             }
+            if (sprite.getPosition().y == 521.f) {
+                sprite.setPosition(0.f, 500.f);
+                Levels = MapState::thirdmap;
+            }
         }
 
 
@@ -124,6 +129,9 @@ int main()
             break;
         case MapState::secondmap:
             window.draw(swamp);
+            window.draw(sprite);
+            break;
+        case MapState::thirdmap:
             window.draw(sprite);
             break;
         }
