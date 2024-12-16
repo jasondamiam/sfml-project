@@ -144,8 +144,8 @@ int main()
             window.draw(sprite);
             break;
         case MapState::thirdmap:
-            window.draw(sprite);
             window.draw(castle);
+            window.draw(sprite);
             window.draw(cultman);
             break;
         }
