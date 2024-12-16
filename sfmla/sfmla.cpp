@@ -31,7 +31,7 @@ int main()
     frend.setPosition(100.f, 100.f);
 
     cultman.setScale(3.f, 3.f);
-    frend.setPosition(500.f, 300.f);
+    cultman.setPosition(500.f, 300.f);
 
     sf::Music startmapmusic;
     startmapmusic.openFromFile("./newbarktown.ogg");
