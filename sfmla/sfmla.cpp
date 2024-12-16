@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <iostream>
 #include "Barrier.h"
 #include "TextureManager.h"
 
@@ -31,7 +32,8 @@ int main()
     frend.setPosition(100.f, 100.f);
 
     cultman.setScale(3.f, 3.f);
-    cultman.setPosition(500.f, 300.f);
+    cultman.setPosition(440.f, 150.f);
+    
 
     sf::Music startmapmusic;
     startmapmusic.openFromFile("./newbarktown.ogg");
@@ -130,6 +132,7 @@ int main()
         }
 
         sprite.move(movement);
+
 
         window.clear();
 
