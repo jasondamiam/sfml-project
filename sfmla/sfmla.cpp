@@ -115,12 +115,14 @@ int main()
                 sprite.setPosition(sprite.getPosition().x, 1);
                 Levels = MapState::start;
             }
-            if (sprite.getPosition().y == 521.f) {
+            if (sprite.getPosition().x == 520.f || sprite.getPosition().y == 390.f) {
                 sprite.setPosition(0.f, 500.f);
                 Levels = MapState::thirdmap;
             }
         }
+        else {
 
+        }
 
         sprite.move(movement);
 
