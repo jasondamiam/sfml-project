@@ -165,8 +165,8 @@ int main()
             break;
         case MapState::thirdmap:
             window.draw(castle);
-            window.draw(sprite);
             window.draw(cultman);
+            window.draw(sprite);
             break;
         case MapState::fourthmap:
             window.draw(castle);
@@ -174,6 +174,14 @@ int main()
             window.draw(beelzebub);
             window.draw(gun);
             break;
+        }
+        
+        sf::FloatRect boundingBox = sprite.getGlobalBounds();
+        sf::FloatRect boundingBox = cultman.getGlobalBounds();
+        sf::FloatRect boundingBox = gun.getGlobalBounds();
+        
+        if () {
+        
         }
 
         window.display();                                                    // displays whats on
