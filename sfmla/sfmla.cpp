@@ -59,15 +59,21 @@ int main()
     };
 
     std::vector<Barrier> secondMapBarriers = {
-        Barrier(sf::Vector2f(0.f, 0.f), sf::Vector2f(1000.f, 300.f)) // top barrier
+        Barrier(sf::Vector2f(0.f, 0.f), sf::Vector2f(1000.f, 340.f)) // top barrier
     };
 
     std::vector<Barrier> thirdMapBarriers = {
-        Barrier(sf::Vector2f(0.f, 0.f), sf::Vector2f(440.f, 50.f))
+        Barrier(sf::Vector2f(0.f, 0.f), sf::Vector2f(1000.f, 1.f)), // top barrier
+        Barrier(sf::Vector2f(0.f, 600.f), sf::Vector2f(1000.f, 1.f)), // bottom barrier
+        Barrier(sf::Vector2f(0.f, 0.f), sf::Vector2f(1.f, 600.f)), // left barrier
+        Barrier(sf::Vector2f(1000.f, 0.f), sf::Vector2f(1.f, 600.f)) // right barrier
     };
 
     std::vector<Barrier> fourthMapBarriers = {
-        Barrier(sf::Vector2f(0.f, 0.f), sf::Vector2f(500.f, 500.f))
+        Barrier(sf::Vector2f(0.f, 0.f), sf::Vector2f(1000.f, 1.f)), // top barrier
+        Barrier(sf::Vector2f(0.f, 600.f), sf::Vector2f(1000.f, 1.f)), // bottom barrier
+        Barrier(sf::Vector2f(0.f, 0.f), sf::Vector2f(1.f, 600.f)), // left barrier
+        Barrier(sf::Vector2f(1000.f, 0.f), sf::Vector2f(1.f, 600.f)) // right barrier
     };
 
     MapState Levels = MapState::start;
@@ -156,7 +162,7 @@ int main()
                 sprite.setPosition(sprite.getPosition().x, 1);
                 Levels = MapState::start;
             }
-            if (sprite.getPosition().x == 520.f || sprite.getPosition().y == 390.f) {
+            if (isInsideBox(sprite.getPosition().x, sprite.getPosition().y, 480.f, 350.f, 20.f, 20.f)) {  // 520.f x 390.f y
                 sprite.setPosition(0.f, 500.f);
                 Levels = MapState::thirdmap;
             }
