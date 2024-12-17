@@ -9,7 +9,8 @@
 enum MapState {
     start,
     secondmap,
-    thirdmap
+    thirdmap,
+    fourthmap
 };
 
 int main()
