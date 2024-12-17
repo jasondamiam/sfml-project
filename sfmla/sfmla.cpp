@@ -25,6 +25,7 @@ int main()
     sf::Sprite sprite(TextureManager::getTexture("./CharacterSprites/Ribbit.png"));
     sf::Sprite frend(TextureManager::getTexture("./CharacterSprites/Chillkatoe.png"));
     sf::Sprite cultman(TextureManager::getTexture("./CharacterSprites/CultLeader.png"));
+    sf::Sprite beelzebub(TextureManager::getTexture("./CharacterSprites/Beelzebub.png"));
 
     sprite.setScale(2.f, 2.f);
     sprite.setPosition(300.f, 300.f);
@@ -151,6 +152,11 @@ int main()
             window.draw(castle);
             window.draw(sprite);
             window.draw(cultman);
+            break;
+        case MapState::fourthmap:
+            window.draw(sprite);
+            window.draw(castle);
+            window.draw(beelzebub);
             break;
         }
 
