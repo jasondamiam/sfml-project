@@ -63,7 +63,11 @@ int main()
     };
 
     std::vector<Barrier> thirdMapBarriers = {
+        Barrier(sf::Vector2f(0.f, 0.f), sf::Vector2f(440.f, 50.f))
+    };
 
+    std::vector<Barrier> fourthMapBarriers = {
+        Barrier(sf::Vector2f(0.f, 0.f), sf::Vector2f(500.f, 500.f))
     };
 
     MapState Levels = MapState::start;
@@ -113,6 +117,9 @@ int main()
         }
         else if (Levels == MapState::thirdmap) {
             barriers = &thirdMapBarriers;
+        }
+        else if (Levels == MapState::fourthmap) {
+            barriers = &fourthMapBarriers;
         }
 
         for (const Barrier& barrier : *barriers) {
@@ -189,10 +196,6 @@ int main()
             window.draw(gun);
             break;
         }
-
-     //   sf::FloatRect boundingBox = sprite.getGlobalBounds();
-     //   sf::FloatRect boundingBox = cultman.getGlobalBounds();
-     //   sf::FloatRect boundingBox = gun.getGlobalBounds();
 
         window.display();                                                    // displays whats on
     }
