@@ -59,6 +59,10 @@ int main()
     };
 
     std::vector<Barrier> secondMapBarriers = {
+        Barrier(sf::Vector2f(0.f, 0.f), sf::Vector2f(1000.f, 300.f)) // top barrier
+    };
+
+    std::vector<Barrier> thirdMapBarriers = {
 
     };
 
@@ -99,7 +103,17 @@ int main()
         newBounds.left += movement.x;
         newBounds.top += movement.y;
 
-        const std::vector<Barrier>* barriers = (Levels == MapState::start) ? &startBarriers : &secondMapBarriers;
+        const std::vector<Barrier>* barriers = nullptr;
+
+        if (Levels == MapState::start) {
+            barriers = &startBarriers;
+        }
+        else if (Levels == MapState::secondmap) {
+            barriers = &secondMapBarriers;
+        }
+        else if (Levels == MapState::thirdmap) {
+            barriers = &thirdMapBarriers;
+        }
 
         for (const Barrier& barrier : *barriers) {
             if (barrier.checkCollision(newBounds)) {
@@ -122,7 +136,7 @@ int main()
 
         auto isInsideBox = [](float x, float y, float left, float top, float width, float height) {
             return x >= left && x <= left + width && y >= top && y <= top + height;
-        };
+            };
 
         if (Levels == MapState::start) {
             if (sprite.getPosition().y < 0) {
@@ -175,14 +189,10 @@ int main()
             window.draw(gun);
             break;
         }
-        
-        sf::FloatRect boundingBox = sprite.getGlobalBounds();
-        sf::FloatRect boundingBox = cultman.getGlobalBounds();
-        sf::FloatRect boundingBox = gun.getGlobalBounds();
-        
-        if () {
-        
-        }
+
+     //   sf::FloatRect boundingBox = sprite.getGlobalBounds();
+     //   sf::FloatRect boundingBox = cultman.getGlobalBounds();
+     //   sf::FloatRect boundingBox = gun.getGlobalBounds();
 
         window.display();                                                    // displays whats on
     }
