@@ -59,7 +59,9 @@ int main()
     };
 
     std::vector<Barrier> secondMapBarriers = {
-        Barrier(sf::Vector2f(0.f, 0.f), sf::Vector2f(1000.f, 340.f)) // top barrier
+        Barrier(sf::Vector2f(0.f, 0.f), sf::Vector2f(1000.f, 340.f)), // top barrier
+        Barrier(sf::Vector2f(0.f, 0.f), sf::Vector2f(50.f, 600.f)), // left barrier
+        Barrier(sf::Vector2f(0.f, 0.f), sf::Vector2f(100.f, 600.f)), // right barrier
     };
 
     std::vector<Barrier> thirdMapBarriers = {
