@@ -113,6 +113,10 @@ int main()
             }
         }
 
+        auto isInsideBox = [](float x, float y, float left, float top, float width, float height) {
+            return x >= left && x <= left + width && y >= top && y <= top + height;
+        };
+
         if (Levels == MapState::start) {
             if (sprite.getPosition().y < 0) {
                 sprite.setPosition(sprite.getPosition().x, window.getSize().y - 1);
@@ -129,8 +133,12 @@ int main()
                 Levels = MapState::thirdmap;
             }
         }
-        else {
-
+        else if (Levels == MapState::thirdmap) {
+            if (isInsideBox(sprite.getPosition().x, sprite.getPosition().y, 420.f, 130.f, 40.f, 40.f)) {
+                std::cout << "To next map\n";
+                sprite.setPosition(100.f, 100.f);
+                Levels = MapState::fourthmap;  // Correct assignment
+            }
         }
 
         sprite.move(movement);
@@ -154,8 +162,8 @@ int main()
             window.draw(cultman);
             break;
         case MapState::fourthmap:
-            window.draw(sprite);
             window.draw(castle);
+            window.draw(sprite);
             window.draw(beelzebub);
             break;
         }
