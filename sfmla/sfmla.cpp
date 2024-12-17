@@ -67,7 +67,7 @@ int main()
     };
 
     std::vector<Barrier> fourthMapBarriers = {
-        Barrier(sf::Vector2f(0.f, 0.f), sf::Vector2f(500.f, 500.f))
+        Barrier(sf::Vector2f(0.f, 0.f), sf::Vector2f(1000.f, 1.f))
     };
 
     MapState Levels = MapState::start;
@@ -156,7 +156,7 @@ int main()
                 sprite.setPosition(sprite.getPosition().x, 1);
                 Levels = MapState::start;
             }
-            if (sprite.getPosition().x == 520.f || sprite.getPosition().y == 390.f) {
+            if (isInsideBox(sprite.getPosition().x, sprite.getPosition().y, 480.f, 350.f, 20.f, 20.f)) {  // 520.f x 390.f y
                 sprite.setPosition(0.f, 500.f);
                 Levels = MapState::thirdmap;
             }
