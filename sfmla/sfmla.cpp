@@ -1,5 +1,4 @@
 #include <iostream>
-
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
@@ -16,14 +15,14 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(1000, 600), "SFML works!");
 
-    // creating the stuff that can be displayed once opened
-
+    // Create the sprites
     sf::Sprite startsprite(TextureManager::getTexture("./MapBackgrounds/start-background.png"));
     sf::Sprite swamp(TextureManager::getTexture("./MapBackgrounds/swamp.png"));
     sf::Sprite castle(TextureManager::getTexture("./MapBackgrounds/Interior-castle.png"));
     sf::Sprite sprite(TextureManager::getTexture("./CharacterSprites/Ribbit.png"));
     sf::Sprite frend(TextureManager::getTexture("./CharacterSprites/Chillkatoe.png"));
     sf::Sprite cultman(TextureManager::getTexture("./CharacterSprites/CultLeader.png"));
+    sf::Sprite beelzebub(TextureManager::getTexture("./CharacterSprites/Beelzebub.png")); // Load Beelzebub texture
 
     sprite.setScale(2.f, 2.f);
     sprite.setPosition(300.f, 300.f);
@@ -33,7 +32,11 @@ int main()
 
     cultman.setScale(3.f, 3.f);
     cultman.setPosition(440.f, 150.f);
-    
+
+    beelzebub.setScale(3.f, 3.f);
+    beelzebub.setPosition(440.f, 150.f); // Same position as cultman initially
+
+    bool isCultmanReplaced = false; // Flag to track if cultman has been replaced
 
     sf::Music startmapmusic;
     startmapmusic.openFromFile("./newbarktown.ogg");
@@ -49,13 +52,11 @@ int main()
         Barrier(sf::Vector2f(1000.f, 0.f), sf::Vector2f(-470.f, 50.f)) // top right barrier
     };
 
-    std::vector<Barrier> secondMapBarriers = {
-
-    };
+    std::vector<Barrier> secondMapBarriers = {};
 
     MapState Levels = MapState::start;
 
-    while (window.isOpen())                                 // what you see when you open
+    while (window.isOpen())
     {
         sf::Event event;
         while (window.pollEvent(event))
@@ -64,11 +65,10 @@ int main()
                 window.close();
         }
 
-
         float moveSpeed = 0.5f;
         sf::Vector2f movement(0.f, 0.f);
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {          // movement
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
             movement.x -= moveSpeed;
             sprite.setScale(-2.f, 2.f);
             sprite.setOrigin(sprite.getLocalBounds().width, 0);
@@ -127,16 +127,17 @@ int main()
                 Levels = MapState::thirdmap;
             }
         }
-        else {
-
-        }
 
         sprite.move(movement);
 
+        // Collision detection for cultman
+        if (!isCultmanReplaced && sprite.getGlobalBounds().intersects(cultman.getGlobalBounds())) {
+            isCultmanReplaced = true; // Mark cultman as replaced
+        }
 
         window.clear();
 
-        switch (Levels) {                                                   // switch case to make switching maps work
+        switch (Levels) {
         case MapState::start:
             window.draw(startsprite);
             window.draw(sprite);
@@ -149,11 +150,16 @@ int main()
         case MapState::thirdmap:
             window.draw(castle);
             window.draw(sprite);
-            window.draw(cultman);
+            if (isCultmanReplaced) {
+                window.draw(beelzebub); // Draw Beelzebub instead of Cultman
+            }
+            else {
+                window.draw(cultman);
+            }
             break;
         }
 
-        window.display();                                                    // displays whats on
+        window.display();
     }
 
     return 0;
