@@ -36,6 +36,12 @@ int main()
 
     cultman.setScale(3.f, 3.f);
     cultman.setPosition(440.f, 150.f);
+
+    beelzebub.setScale(3.f, 3.f);
+    beelzebub.setPosition(440.f, 150.f);
+
+    gun.setScale(2.f, 2.f);
+    gun.setPosition(440.f, 350.f);
     
 
     sf::Music startmapmusic;
