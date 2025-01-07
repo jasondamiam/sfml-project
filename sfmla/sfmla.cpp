@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Barrier.h"
 #include "TextureManager.h"
+#include "DialogueEventManager.h"
 
 enum MapState {
     start,
@@ -18,6 +19,13 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1000, 600), "SFML works!");
 
     // creating the stuff that can be displayed once opened
+
+    sf::Font font;
+    if (!font.loadFromFile("ARIAL.TTF")) {
+        return -1;
+    }
+
+    DialogueEventManager dialogueManager(font, sf::Vector2f(900.f, 100.f));
 
     sf::Sprite startsprite(TextureManager::getTexture("./MapBackgrounds/start-background.png"));
     sf::Sprite swamp(TextureManager::getTexture("./MapBackgrounds/swamp.png"));
@@ -117,6 +125,7 @@ int main()
 
         if (Levels == MapState::start) {
             barriers = &startBarriers;
+            dialogueManager.addEvent(sf::Vector2f(100.f, 100.f), { "Whats up", "Scary cult up ahead" });
         }
         else if (Levels == MapState::secondmap) {
             barriers = &secondMapBarriers;
@@ -176,33 +185,31 @@ int main()
         }
 
         sprite.move(movement);
-
+        dialogueManager.checkInteraction(sprite, sf::Keyboard::E);
 
         window.clear();
 
         switch (Levels) {                                                   // switch case to make switching maps work
         case MapState::start:
             window.draw(startsprite);
-            window.draw(sprite);
             window.draw(frend);
             break;
         case MapState::secondmap:
             window.draw(swamp);
-            window.draw(sprite);
             break;
         case MapState::thirdmap:
             window.draw(castle);
             window.draw(cultman);
-            window.draw(sprite);
             break;
         case MapState::fourthmap:
             window.draw(castle);
-            window.draw(sprite);
             window.draw(beelzebub);
             window.draw(gun);
             break;
         }
 
+        window.draw(sprite);
+        dialogueManager.draw(window);
         window.display();                                                    // displays whats on
     }
 
