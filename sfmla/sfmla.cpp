@@ -127,13 +127,14 @@ int main()
 
         if (Levels == MapState::start) {
             barriers = &startBarriers;
-            dialogueManager.addEvent(sf::Vector2f(100.f, 100.f), { "Whats up", "Scary cult up ahead" });
+            dialogueManager.addEvent(sf::Vector2f(100.f, 100.f), { "Whats up", "Scary cult up ahead","They wil fuck you in the ass", "I like it I want to go again"}); //Dialogue
         }
         else if (Levels == MapState::secondmap) {
             barriers = &secondMapBarriers;
         }
         else if (Levels == MapState::thirdmap) {
             barriers = &thirdMapBarriers;
+            dialogueManager.addEvent(sf::Vector2f(440.f, 150.f), { "Me Is Evil", "Like larrys", "I went to the movies little dids i know...", "It would be a feature...", "A creature feature...", "Featuring...", "The creature :insert shcoked face:"}); //evil cult dialogue
         }
         else if (Levels == MapState::fourthmap) {
             barriers = &fourthMapBarriers;
@@ -187,7 +188,7 @@ int main()
         }
 
         sprite.move(movement);
-        dialogueManager.checkInteraction(sprite, sf::Keyboard::E);
+        dialogueManager.checkInteraction(sprite, sf::Keyboard::E);          //Interaction Button
 
         window.clear();
 
