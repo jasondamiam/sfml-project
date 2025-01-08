@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClInclude Include="Barrier.h" />
     <ClInclude Include="DialogueEventManager.h" />
+    <ClInclude Include="MapState.h" />
     <ClInclude Include="TextureManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

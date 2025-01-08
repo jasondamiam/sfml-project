@@ -38,5 +38,8 @@
     <ClInclude Include="DialogueEventManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MapState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

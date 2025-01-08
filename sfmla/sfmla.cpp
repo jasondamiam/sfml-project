@@ -5,14 +5,8 @@
 #include <iostream>
 #include "Barrier.h"
 #include "TextureManager.h"
+#include "MapState.h"
 #include "DialogueEventManager.h"
-
-enum MapState {
-    start,
-    secondmap,
-    thirdmap,
-    fourthmap
-};
 
 int main()
 {
@@ -127,14 +121,14 @@ int main()
 
         if (Levels == MapState::start) {
             barriers = &startBarriers;
-            dialogueManager.addEvent(sf::Vector2f(100.f, 100.f), { "Whats up", "Scary cult up ahead","They wil fuck you in the ass", "I like it I want to go again"}); //Dialogue
+            dialogueManager.addEvent(sf::Vector2f(100.f, 100.f), { "Whats up", "Scary cult up ahead","They wil fuck you in the ass", "I like it I want to go again"}, MapState::start); //Dialogue
         }
         else if (Levels == MapState::secondmap) {
             barriers = &secondMapBarriers;
         }
         else if (Levels == MapState::thirdmap) {
             barriers = &thirdMapBarriers;
-            dialogueManager.addEvent(sf::Vector2f(440.f, 150.f), { "Me Is Evil", "Like larrys", "I went to the movies little dids i know...", "It would be a feature...", "A creature feature...", "Featuring...", "The creature :insert shcoked face:"}); //evil cult dialogue
+            dialogueManager.addEvent(sf::Vector2f(440.f, 150.f), { "Me Is Evil", "Like larrys", "I went to the movies little dids i know...", "It would be a feature...", "A creature feature...", "Featuring...", "The creature :insert shcoked face:"}, MapState::thirdmap, MapState::fourthmap); //evil cult dialogue
         }
         else if (Levels == MapState::fourthmap) {
             barriers = &fourthMapBarriers;
@@ -163,15 +157,6 @@ int main()
             return x >= left && x <= left + width && y >= top && y <= top + height;
             };
 
-        if (dialogueManager.isDialogueComplete()) {
-            if (Levels == MapState::start) {
-                Levels = MapState::start;
-            }
-            else if (Levels == MapState::thirdmap) {
-                Levels = MapState::fourthmap;
-            }
-        }
-
         if (Levels == MapState::start) {
             if (sprite.getPosition().y < 0) {
                 sprite.setPosition(sprite.getPosition().x, window.getSize().y - 1);
@@ -190,7 +175,10 @@ int main()
         }
 
         sprite.move(movement);
-        dialogueManager.checkInteraction(sprite, sf::Keyboard::E);          //Interaction Button
+        MapState newMapState = dialogueManager.checkInteraction(sprite, sf::Keyboard::E, Levels);
+        if (newMapState != Levels) {
+            Levels = newMapState;                                           // change the map state if a transition is needed
+        }
 
         window.clear();
 
