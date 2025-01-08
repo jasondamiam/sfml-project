@@ -19,7 +19,10 @@ void DialogueEventManager::addEvent(const sf::Vector2f& position, const std::vec
 
 void DialogueEventManager::checkInteraction(const sf::Sprite& sprite, const sf::Keyboard::Key key)
 {
-    if (dialogueActive && sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+
+    bool enterKeyIsPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Enter);
+
+    if (dialogueActive && enterKeyIsPressed && !enterKeyWasPressed) {
         currentLineIndex++;
         if (currentLineIndex >= (int)events[currentEventIndex].dialogue.size()) {
             dialogueActive = false;
@@ -29,8 +32,9 @@ void DialogueEventManager::checkInteraction(const sf::Sprite& sprite, const sf::
         else {
             dialogueText.setString(events[currentEventIndex].dialogue[currentLineIndex]);
         }
-        return;
     }
+
+    enterKeyWasPressed = enterKeyIsPressed;
 
     if (sf::Keyboard::isKeyPressed(key) && !dialogueActive) {
         for (int i = 0; i < (int)events.size(); ++i) {

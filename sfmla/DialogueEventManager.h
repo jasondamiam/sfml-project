@@ -22,6 +22,8 @@ private:
 	sf::Text dialogueText;
 	std::vector<DialogueEvent> events;
 
+	bool enterKeyWasPressed = false;
+
 	int currentEventIndex = -1;
 	int currentLineIndex = 0;
 	bool dialogueActive = false;
