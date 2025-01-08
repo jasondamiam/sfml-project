@@ -10,6 +10,7 @@ public:
 	void addEvent(const sf::Vector2f& position, const std::vector<std::string>& dialogue);
 	void checkInteraction(const sf::Sprite& sprite, const sf::Keyboard::Key key);
 	void draw(sf::RenderWindow& window);
+	bool isDialogueComplete() const;
 
 private:
 	struct DialogueEvent {
@@ -27,6 +28,7 @@ private:
 	int currentEventIndex = -1;
 	int currentLineIndex = 0;
 	bool dialogueActive = false;
+	bool dialogueComplete = false;
 
 	static constexpr float interactionRadius = 50.f;
 };

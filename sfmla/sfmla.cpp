@@ -163,6 +163,15 @@ int main()
             return x >= left && x <= left + width && y >= top && y <= top + height;
             };
 
+        if (dialogueManager.isDialogueComplete()) {
+            if (Levels == MapState::start) {
+                Levels = MapState::start;
+            }
+            else if (Levels == MapState::thirdmap) {
+                Levels = MapState::fourthmap;
+            }
+        }
+
         if (Levels == MapState::start) {
             if (sprite.getPosition().y < 0) {
                 sprite.setPosition(sprite.getPosition().x, window.getSize().y - 1);
@@ -177,13 +186,6 @@ int main()
             if (isInsideBox(sprite.getPosition().x, sprite.getPosition().y, 480.f, 350.f, 20.f, 20.f)) {  // 520.f x 390.f y
                 sprite.setPosition(0.f, 500.f);
                 Levels = MapState::thirdmap;
-            }
-        }
-        else if (Levels == MapState::thirdmap) {
-            if (isInsideBox(sprite.getPosition().x, sprite.getPosition().y, 420.f, 130.f, 40.f, 40.f)) {
-                std::cout << "To next map\n";
-                sprite.setPosition(100.f, 100.f);
-                Levels = MapState::fourthmap;  // Correct assignment
             }
         }
 

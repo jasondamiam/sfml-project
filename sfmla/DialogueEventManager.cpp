@@ -28,6 +28,7 @@ void DialogueEventManager::checkInteraction(const sf::Sprite& sprite, const sf::
             dialogueActive = false;
             currentEventIndex = -1;
             currentLineIndex = 0;
+            dialogueComplete = true;
         }
         else {
             dialogueText.setString(events[currentEventIndex].dialogue[currentLineIndex]);
@@ -48,6 +49,7 @@ void DialogueEventManager::checkInteraction(const sf::Sprite& sprite, const sf::
                 currentLineIndex = 0;
                 event.triggered = true;
                 dialogueText.setString(event.dialogue[currentLineIndex]);
+                dialogueComplete = false;
                 break;
             }
         }
@@ -60,4 +62,9 @@ void DialogueEventManager::draw(sf::RenderWindow& window)
         window.draw(dialogueBox);
         window.draw(dialogueText);
     }
+}
+
+bool DialogueEventManager::isDialogueComplete() const
+{
+    return dialogueComplete;
 }
