@@ -121,14 +121,14 @@ int main()
 
         if (Levels == MapState::start) {
             barriers = &startBarriers;
-            dialogueManager.addEvent(sf::Vector2f(100.f, 100.f), { "Whats up", "Scary cult up ahead","They wil fuck you in the ass", "I like it I want to go again"}, MapState::start); //Dialogue
+            dialogueManager.addEvent(sf::Vector2f(100.f, 100.f), {"Hello traveler!", "I see your finally awake", "There is a scary cult upahead", "Decapatate their leader"}, MapState::start); //Dialogue
         }
         else if (Levels == MapState::secondmap) {
             barriers = &secondMapBarriers;
         }
         else if (Levels == MapState::thirdmap) {
             barriers = &thirdMapBarriers;
-            dialogueManager.addEvent(sf::Vector2f(440.f, 150.f), { "Me Is Evil", "Like larrys", "I went to the movies little dids i know...", "It would be a feature...", "A creature feature...", "Featuring...", "The creature :insert shcoked face:"}, MapState::thirdmap, MapState::fourthmap); //evil cult dialogue
+            dialogueManager.addEvent(sf::Vector2f(440.f, 150.f), { "Greetings Inferior", "It seemeth you are a frog", "As you are a frog you are my natural enemie", "After all...", "I am", "Beelzebub", "Lord of the flies, Sin of Gluttony and Envy"}, MapState::thirdmap, MapState::fourthmap); //evil cult dialogue
         }
         else if (Levels == MapState::fourthmap) {
             barriers = &fourthMapBarriers;
