@@ -29,6 +29,8 @@ int main()
     sf::Sprite cultman(TextureManager::getTexture("./CharacterSprites/CultLeader.png"));
     sf::Sprite beelzebub(TextureManager::getTexture("./CharacterSprites/Beelzebub.png"));
     sf::Sprite gun(TextureManager::getTexture("./CharacterSprites/Flintlock.png"));
+    sf::Sprite ending1(TextureManager::getTexture("./Endings/Ending1.png"));
+    sf::Sprite ending2(TextureManager::getTexture("./Endings/Ending2.png"));
 
     sprite.setScale(2.f, 2.f);
     sprite.setPosition(300.f, 300.f);
@@ -81,6 +83,9 @@ int main()
     };
 
     MapState Levels = MapState::start;
+    bool gunTouchedByPlayer = false;
+    bool gunTouchedByBeelzebub = false;
+
 
     while (window.isOpen())                                 // what you see when you open
     {
@@ -180,6 +185,15 @@ int main()
             Levels = newMapState;                                           // change the map state if a transition is needed
         }
 
+        if (Levels == MapState::fourthmap) {
+            if (sprite.getGlobalBounds().intersects(gun.getGlobalBounds())) {
+                gunTouchedByPlayer = true;
+            }
+            if (beelzebub.getGlobalBounds().intersects(gun.getGlobalBounds())) {
+                gunTouchedByBeelzebub = true;
+            }
+        }
+
         window.clear();
 
         switch (Levels) {                                                   // switch case to make switching maps work
@@ -205,6 +219,23 @@ int main()
 
         window.draw(sprite);
         dialogueManager.draw(window);
+        
+        // Display endings
+        if (gunTouchedByPlayer) {
+            sf::Text endingText("Ending 1: You Win", font, 50);
+            endingText.setPosition(100.f, 100.f);
+            window.draw(ending1);
+            window.draw(endingText);
+            
+        }
+
+        if (gunTouchedByBeelzebub) {
+            sf::Text endingText("Ending 2: Beelzebub Win's", font, 50);
+            endingText.setPosition(100.f, 100.f);
+            window.draw(ending2);
+            window.draw(endingText);
+            
+        }
         window.display();                                                    // displays whats on
     }
 
