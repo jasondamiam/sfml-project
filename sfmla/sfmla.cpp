@@ -201,6 +201,8 @@ int main()
             break;
         }
 
+
+
         window.draw(sprite);
         dialogueManager.draw(window);
         window.display();                                                    // displays whats on
@@ -208,3 +210,9 @@ int main()
 
     return 0;
 }
+
+//Get the position of the gun
+//Give the position to Beelzebub
+//Make beelzebub move to the given location
+//Make it if the player touches it you get ending one
+//Make it so that if beelzebub touches it you get ending two
