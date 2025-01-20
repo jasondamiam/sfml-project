@@ -25,20 +25,18 @@ MapState DialogueEventManager::checkInteraction(const sf::Sprite& sprite, const 
     if (dialogueActive && enterKeyIsPressed && !enterKeyWasPressed) {
         currentLineIndex++;
         if (currentLineIndex >= (int)events[currentEventIndex].dialogue.size()) {
-            // Dialogue is complete
             dialogueActive = false;
-            MapState targetMapState = events[currentEventIndex].targetMapState; // Store the target map state
-            currentEventIndex = -1; // Reset the event index
+            MapState targetMapState = events[currentEventIndex].targetMapState; 
+            currentEventIndex = -1; 
             currentLineIndex = 0;
             dialogueComplete = true;
-            return targetMapState; // Return the target map state
+            return targetMapState; 
         }
         else {
             dialogueText.setString(events[currentEventIndex].dialogue[currentLineIndex]);
         }
     }
 
-    // Update the state of the Enter key for the next frame
     enterKeyWasPressed = enterKeyIsPressed;
 
     // Handle interaction with events
@@ -48,20 +46,19 @@ MapState DialogueEventManager::checkInteraction(const sf::Sprite& sprite, const 
             sf::Vector2f playerPos = sprite.getPosition();
             float distance = std::sqrt(std::pow(playerPos.x - event.position.x, 2) + std::pow(playerPos.y - event.position.y, 2));
 
-            // Check if the event is for the current map state
             if (distance < interactionRadius && !event.triggered && event.mapState == currentMapState) {
                 dialogueActive = true;
                 currentEventIndex = i;
                 currentLineIndex = 0;
                 event.triggered = true;
                 dialogueText.setString(event.dialogue[currentLineIndex]);
-                dialogueComplete = false; // Reset completion flag
+                dialogueComplete = false; 
                 break;
             }
         }
     }
 
-    return currentMapState; // Return the current map state if no transition is needed
+    return currentMapState; 
 }
 
 void DialogueEventManager::draw(sf::RenderWindow& window)
