@@ -1,6 +1,6 @@
 #include "DialogueEventManager.h"
 
-DialogueEventManager::DialogueEventManager(sf::Font& font, const sf::Vector2f& boxSize)
+DialogueEventManager::DialogueEventManager(sf::Font& font, const sf::Vector2f& boxSize) // dialoguebox design
 {
     dialogueBox.setSize(boxSize);
     dialogueBox.setFillColor(sf::Color(0, 0, 0, 200));
@@ -12,7 +12,7 @@ DialogueEventManager::DialogueEventManager(sf::Font& font, const sf::Vector2f& b
     dialogueText.setPosition(dialogueBox.getPosition().x + 10, dialogueBox.getPosition().y + 10);
 }
 
-void DialogueEventManager::addEvent(const sf::Vector2f& position, const std::vector<std::string>& dialogue, MapState mapState, MapState targetMapState)
+void DialogueEventManager::addEvent(const sf::Vector2f& position, const std::vector<std::string>& dialogue, MapState mapState, MapState targetMapState) // where the dialogue is placed
 {
     events.push_back({ position, dialogue, false, mapState, targetMapState });
 }
@@ -24,7 +24,7 @@ MapState DialogueEventManager::checkInteraction(const sf::Sprite& sprite, const 
     // Check if the Enter key was just pressed (not held)
     if (dialogueActive && enterKeyIsPressed && !enterKeyWasPressed) {
         currentLineIndex++;
-        if (currentLineIndex >= (int)events[currentEventIndex].dialogue.size()) {
+        if (currentLineIndex >= (int)events[currentEventIndex].dialogue.size()) { 
             dialogueActive = false;
             MapState targetMapState = events[currentEventIndex].targetMapState; 
             currentEventIndex = -1; 

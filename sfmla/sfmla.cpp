@@ -64,7 +64,7 @@ int main()
     sf::Music startmapmusic;
     sf::Music finalmusic;
 
-    startmapmusic.openFromFile("./newbarktown.ogg");
+    startmapmusic.openFromFile("./newbarktown.ogg"); // music stuff
     startmapmusic.setVolume(100.f);
     startmapmusic.setLoop(true);
     startmapmusic.play();
@@ -120,7 +120,7 @@ int main()
             float moveSpeed = 0.5f;
             sf::Vector2f movement(0.f, 0.f);
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {      // player movement
                 movement.x -= moveSpeed;
                 sprite.setScale(-2.f, 2.f);
                 sprite.setOrigin(sprite.getLocalBounds().width, 0);
@@ -161,12 +161,12 @@ int main()
                 if (!finalMusicStarted) {
                     startmapmusic.stop();
                     finalmusic.play();
-                    finalMusicStarted = true; // Ensure the music only starts once
+                    finalMusicStarted = true; // ensure the music only starts once
                 }
             }
 
             for (const Barrier& barrier : *barriers) {
-                if (barrier.checkCollision(newBounds)) {
+                if (barrier.checkCollision(newBounds)) {        // barriers collision check with player
                     sf::FloatRect barrierBounds = barrier.getBounds();
 
                     if (newBounds.left < barrierBounds.left && movement.x > 0) {
@@ -188,7 +188,7 @@ int main()
                 return x >= left && x <= left + width && y >= top && y <= top + height;
                 };
 
-            if (Levels == MapState::start) {
+            if (Levels == MapState::start) {        // when to map change
                 if (sprite.getPosition().y < 0) {
                     sprite.setPosition(sprite.getPosition().x, window.getSize().y - 1);
                     Levels = MapState::secondmap;
@@ -222,7 +222,7 @@ int main()
                 Levels = newMapState; 
             }
 
-            if (Levels == MapState::fourthmap) {
+            if (Levels == MapState::fourthmap) {  // endings
                 if (sprite.getGlobalBounds().intersects(gun.getGlobalBounds())) {
                     gameState = GameState::Ending1;
                     startmapmusic.stop();
@@ -236,7 +236,7 @@ int main()
         window.clear();
 
         switch (Levels) {
-        case MapState::start:
+        case MapState::start:   // map changes
             window.draw(startsprite);
             window.draw(frend);
             break;
